@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
-const User = require("../models/User.js") 
-mongoose.model("User");
+const prisma = require("../../utils/prisma");
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -14,7 +12,7 @@ module.exports = (req, res, next) => {
       return res.status(401).send({ error: "You must be logged in" });
     }
     const { userId } = payload;
-    const user = await User.findById(userId);
+    const user = await prisma.user.findUnique({ where: { id: userId } });
     req.user = user;
     next();
   });
