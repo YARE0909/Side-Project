@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const prisma = require("../utils/prisma.js");
 const requireAuth = require("./middlewares/requireAuth.js");
 const authRoutes = require("./routes/authRoutes");
 const bodyParser = require("body-parser");
@@ -9,10 +8,16 @@ require("dotenv").config();
 
 const app = express();
 app.use(bodyParser.json());
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 app.use(authRoutes);
-
-app.use(cors());
-
 const mongoUri = process.env.MONGO_URL;
 
 const PORT = 3001;
