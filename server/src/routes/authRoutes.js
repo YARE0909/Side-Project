@@ -6,9 +6,10 @@ const { Types } = require("mongoose");
 const bcrypt = require("bcrypt");
 
 // Function to compare passwords
-function password(givenPassword, actualPassword) {
-  return new Promise((resolve, reject) => {
-    bcrypt.compare(actualPassword, givenPassword, (err, isMatch) => {
+function comparePassword(candidatePassword) {
+  return () => async (resolve, reject) => {
+    const user = this;
+    await bcrypt.compare(candidatePassword, user.password, (err, isMatch) => {
       if (err) {
         return reject(err);
       }
@@ -17,7 +18,7 @@ function password(givenPassword, actualPassword) {
       }
       resolve(true);
     });
-  });
+  };
 }
 
 router.post("/signup", async (req, res) => {
@@ -25,6 +26,12 @@ router.post("/signup", async (req, res) => {
   const { email: _email, password: _password } = req.body;
   try {
     const generatedId = new Types.ObjectId();
+    const checkUser = await prisma.user.findUnique({
+      where: { email: _email },
+    });
+    if (checkUser) {
+      return res.status(302).send("Email already exists");
+    }
     const user = await prisma.user.create({
       data: { email: _email, password: _password, id: String(generatedId) },
     });
@@ -50,7 +57,7 @@ router.post("/signin", async (req, res) => {
     return res.status(404).send({ error: "Email not found" });
   }
   try {
-    await comparePassword(_password, user.password);
+    comparePassword(_password);
     const token = jwt.sign({ userId: user.id }, "MY_SECRET_KEY");
     res.send({ token });
   } catch (err) {
