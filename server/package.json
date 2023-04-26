@@ -19,6 +19,7 @@
     "nodemon": "^2.0.22"
   },
   "devDependencies": {
-    "@types/node": "^18.16.1"
+    "@types/node": "^18.16.1",
+    "@types/react": "^18.2.0"
   }
 }
