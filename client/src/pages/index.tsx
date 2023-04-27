@@ -1,26 +1,19 @@
 import Hero from "@/components/Hero";
-import db from "./api/db";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { headers } from "next/dist/client/components/headers";
+import NavBar from "@/components/NavBar";
 
 export default function Home() {
-  const [result, setResult]: any = useState(null);
-
-  const getResult = async () => {
-    const response = await db.post(`/signin`, {
-      email: "tester@gmail.com",
-      password: "gay",
-    });
-    console.log(response.data);
-    setResult(response.data.token);
-  };
-
+  const router = useRouter();
+  const [token, setToken]: any = useState(null);
   useEffect(() => {
-    getResult();
+    setToken(localStorage.getItem("token"));
   }, []);
   return (
-    <div className="w-full min-h-screen h-full bg-[#29272a]">
-      <Hero message={result} />
+    <div className="w-full min-h-screen h-full bg-[#081c29]">
+      <NavBar token={token} />
+      <Hero />
     </div>
   );
 }
