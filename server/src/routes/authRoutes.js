@@ -18,11 +18,10 @@ router.post("/signup", async (req, res) => {
         }
         bcrypt.genSalt(10, function (err, salt) {
             bcrypt.hash(_password, salt, async function (err, hash) {
-                const hashedPassword = hash;
                 const user = await prisma.user.create({
                     data: {
                         email: _email,
-                        password: hashedPassword,
+                        password: hash,
                         id: String(generatedId),
                     },
                 });
