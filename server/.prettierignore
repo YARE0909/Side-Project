@@ -1,0 +1,6 @@
+readme.md
+.prettierrc.json
+.eslintrc.json
+.gitignore
+package-lock.json
+package.json
