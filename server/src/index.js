@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const requireAuth = require("./middlewares/requireAuth.js");
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
@@ -11,7 +11,6 @@ app.use(bodyParser.json());
 
 const corsOptions = {
     origin: "http://localhost:3000",
-    // access-control-allow-credentials:true
     credentials: true,
     optionSuccessStatus: 200,
 };
@@ -19,6 +18,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(authRoutes);
+app.use(userRoutes);
 // eslint-disable-next-line no-undef
 const mongoUri = process.env.MONGO_URL;
 
@@ -33,7 +33,7 @@ mongoose.connection.on("error", err => {
     console.error("Error connecting to mongo", err);
 });
 
-app.get("/", requireAuth, (req, res) => {
+app.get("/", (req, res) => {
     res.send("Hello There");
 });
 

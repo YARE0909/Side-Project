@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Router from "next/router";
+import { destroyCookie } from "nookies";
 
 const NavBar = ({ token }: any) => {
   return (
@@ -13,7 +14,7 @@ const NavBar = ({ token }: any) => {
           {token ? (
             <div
               onClick={() => {
-                localStorage.removeItem("token");
+                destroyCookie(null, "token");
                 Router.reload();
               }}
             >

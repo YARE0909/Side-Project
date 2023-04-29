@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import db from "./api/db";
+import { parseCookies, setCookie } from "nookies";
 
 const SignIn = () => {
   const router = useRouter();
@@ -8,6 +9,8 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+
+  const [error, setError]: any = useState(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((data) => ({
@@ -23,24 +26,29 @@ const SignIn = () => {
         email: (event.currentTarget.elements[0] as HTMLInputElement).value,
         password: (event.currentTarget.elements[1] as HTMLInputElement).value,
       };
-
-      console.log(formData);
-
       const response = await db.post("/signin", {
         email: formData.email,
         password: formData.password,
       });
+      setError(false);
       const token = await response.data.token;
-      localStorage.setItem("token", token);
-      console.log(localStorage.getItem("token"));
+      setCookie(null, "token", token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      });
       router.push("/");
     } catch (err: any) {
-      console.log(err);
+      if (!err.response) {
+        setError("Something went wrong please try again later");
+      } else {
+        setError(err.response.data.error);
+      }
     }
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const cookies = parseCookies();
+    const token = cookies.token;
     if (token) {
       router.push("/");
     }
@@ -77,6 +85,11 @@ const SignIn = () => {
               Login
             </span>
           </button>
+          {!error ? null : (
+            <div>
+              <h1 className="text-red-600">{error}</h1>
+            </div>
+          )}
         </form>
       </div>
     </div>
