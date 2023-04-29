@@ -4,7 +4,6 @@ const prisma = require("../../utils/prisma");
 
 router.get("/getPosts", async (req, res) => {
     try {
-        
         const posts = await prisma.post.findMany({});
         res.status(200).send(posts);
     } catch (err) {
