@@ -23,4 +23,49 @@ router.post("/profile", async (req, res) => {
     }
 });
 
+router.post("/post", async (req, res) => {
+    const { authorization } = req.headers;
+    const { title: _title, content: _content } = req.body;
+    if (!authorization) {
+        return res.status(401).send({ error: "You must be logged in" });
+    }
+    const token = authorization.replace("Bearer ", "");
+    try {
+        const decoded = jwt.verify(token, "MY_SECRET_KEY");
+        const userId = decoded.userId;
+        await prisma.post.create({
+            data: {
+                title: _title,
+                content: _content,
+                authorId: String(userId),
+            },
+        });
+        res.status(200).send("Post created successfully!");
+    } catch (err) {
+        console.log(err);
+        res.status(422).send({ error: err });
+    }
+});
+
+router.get("/getUserPosts", async (req, res) => {
+    const { authorization } = req.headers;
+    if (!authorization) {
+        return res.status(401).send({ error: "You must be logged in" });
+    }
+    const token = authorization.replace("Bearer ", "");
+    try {
+        const decoded = jwt.verify(token, "MY_SECRET_KEY");
+        const userId = decoded.userId;
+        const posts = await prisma.post.findMany({
+            where: {
+                authorId: String(userId),
+            },
+        });
+        res.status(200).send(posts);
+    } catch (err) {
+        console.log(err);
+        res.status(422).send({ error: err });
+    }
+});
+
 module.exports = router;

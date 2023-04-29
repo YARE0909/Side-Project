@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const commonRoutes = require("./routes/commonRoutes");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
@@ -19,6 +20,7 @@ app.use(cors(corsOptions));
 
 app.use(authRoutes);
 app.use(userRoutes);
+app.use(commonRoutes);
 // eslint-disable-next-line no-undef
 const mongoUri = process.env.MONGO_URL;
 
