@@ -12,17 +12,17 @@ router.get("/getPosts", async (req, res) => {
 });
 
 router.delete("/delete", async (req, res) => {
-    const {id: _id} = req.query;
+    const { id: _id } = req.query;
     try {
         await prisma.post.delete({
             where: {
-                id: _id
-            }
-        })
+                id: _id,
+            },
+        });
         res.status(200).send(`Post ${_id} deleted`);
-    }catch(err){
+    } catch (err) {
         res.status(422).send({ error: err });
     }
-})
+});
 
 module.exports = router;
