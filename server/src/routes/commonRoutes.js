@@ -7,9 +7,22 @@ router.get("/getPosts", async (req, res) => {
         const posts = await prisma.post.findMany({});
         res.status(200).send(posts);
     } catch (err) {
-        console.log(err);
         res.status(422).send({ error: err });
     }
 });
+
+router.delete("/delete", async (req, res) => {
+    const {id: _id} = req.query;
+    try {
+        await prisma.post.delete({
+            where: {
+                id: _id
+            }
+        })
+        res.status(200).send(`Post ${_id} deleted`);
+    }catch(err){
+        res.status(422).send({ error: err });
+    }
+})
 
 module.exports = router;
