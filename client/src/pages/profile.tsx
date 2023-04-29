@@ -31,10 +31,9 @@ const Profile = () => {
   }, [userData]);
   return (
     <div>
-      <div>Profile</div>
       {!error ? (
         <div>
-          <h1>{userData.email}</h1>{" "}
+          <h1>{userData.userName}</h1>
         </div>
       ) : (
         <div>

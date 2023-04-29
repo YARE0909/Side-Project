@@ -17,7 +17,7 @@ router.post("/profile", async (req, res) => {
             where: { id: userId },
         });
 
-        res.send({ email: user.email });
+        res.send({ email: user.email, userName: user.userName });
     } catch (err) {
         res.status(422).send({ error: err });
     }

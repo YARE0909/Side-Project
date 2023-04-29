@@ -7,7 +7,11 @@ const bcrypt = require("bcrypt");
 
 router.post("/signup", async (req, res) => {
     // Aliasing email and password to _email and _password respectively.
-    const { email: _email, password: _password } = req.body;
+    const {
+        email: _email,
+        password: _password,
+        userName: _userName,
+    } = req.body;
     try {
         const generatedId = new Types.ObjectId();
         const checkUser = await prisma.user.findUnique({
@@ -23,6 +27,7 @@ router.post("/signup", async (req, res) => {
                         email: _email,
                         password: hash,
                         id: String(generatedId),
+                        userName: _userName,
                     },
                 });
                 const token = jwt.sign({ userId: user.id }, "MY_SECRET_KEY");
