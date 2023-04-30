@@ -47,6 +47,24 @@ router.post("/post", async (req, res) => {
     }
 });
 
+router.delete("/delete", async (req, res) => {
+    const { id: _id } = req.query;
+    const { authorization } = req.headers;
+    if (!authorization) {
+        return res.status(401).send({ error: "You must be logged in" });
+    }
+    try {
+        await prisma.post.delete({
+            where: {
+                id: _id,
+            },
+        });
+        res.status(200).send(`Post ${_id} deleted`);
+    } catch (err) {
+        res.status(422).send({ error: err.meta.cause });
+    }
+});
+
 router.get("/getUserPosts", async (req, res) => {
     const { authorization } = req.headers;
     if (!authorization) {
