@@ -25,7 +25,7 @@ input[type="number"] {
 }
 .input-container input {
   border: 0;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid #b767ff;
   background: transparent;
   width: 100%;
   padding: 8px 0 5px 0;
@@ -36,16 +36,17 @@ input[type="number"] {
 .input-container input:focus {
   border: none;
   outline: none;
-  border-bottom: 1.5px solid green;
+  border-bottom: 1.5px solid #44fadd;
 }
 .input-container input:hover {
   border: none;
   outline: none;
-  border-bottom: 1.5px solid blue;
+  border-bottom: 1.5px solid #ffee7d;
 }
 
 .input-container input:focus ~ label,
 .input-container input:valid ~ label {
   top: -12px;
   font-size: 12px;
+  font-weight: bold;
 }
