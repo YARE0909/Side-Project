@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import db from "./api/db";
 import { parseCookies, setCookie } from "nookies";
+import Link from "next/link";
 
 const SignIn = () => {
   const router = useRouter();
@@ -95,7 +96,9 @@ const SignIn = () => {
               Login
             </button>
           </div>
-          <div>
+          <div className="flex flex-col h-[30px] gap-5 pt-4">
+            <Link href="/signUp"  className="text-xs font-bold text-[#c2bdc5] hover:text-[#FFA3FD] duration-300">New to chirp.? Sign Up!</Link>
+          <div className="align-bottom">
             {!error ? null : (
               <div>
                 <h1 className="text-red-500 text-xs font-bold p-0 m-0">
@@ -103,6 +106,7 @@ const SignIn = () => {
                 </h1>
               </div>
             )}
+          </div>
           </div>
         </form>
       </div>
