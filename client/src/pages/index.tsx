@@ -12,7 +12,7 @@ export default function Home() {
     setToken(cookies.token);
   }, []);
   return (
-    <div className="w-full min-h-screen h-full bg-[#081c29]">
+    <div className="w-full min-h-screen h-full bg-[#222831]">
       <NavBar token={token} />
       <Hero />
     </div>

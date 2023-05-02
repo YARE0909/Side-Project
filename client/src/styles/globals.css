@@ -41,7 +41,7 @@ input[type="number"] {
 .input-container input:hover {
   border: none;
   outline: none;
-  border-bottom: 1.5px solid #ffee7d;
+  border-bottom: 1.5px solid #fcda05;
 }
 
 .input-container input:focus ~ label,

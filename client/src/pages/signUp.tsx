@@ -51,9 +51,9 @@ const SignUp = () => {
   };
 
   return (
-    <div className="w-full min-h-screen h-full flex flex-col gap-20 items-start justify-center bg-[#534c98] text-white">
+    <div className="w-full min-h-screen h-full flex flex-col gap-20 items-start justify-center bg-[#222831] text-white">
       <div className="pl-12">
-        <h1 className="text-8xl lg:text-9xl text-[#FFA3FD] font-bold">
+        <h1 className="text-8xl lg:text-9xl text-[#fcda05] font-bold">
           chirp.
         </h1>
       </div>
@@ -99,7 +99,7 @@ const SignUp = () => {
             </div>
             <button
               type="submit"
-              className="border-[#FFEE7D] text-[#FFEE7D] font-bold border-2 rounded-lg pl-4 pr-4 pt-2 pb-2 hover:bg-[#FFEE7D] hover:text-[#b767ff] duration-300"
+              className="border-[#fcda05] text-[#fcda05] font-bold border-2 rounded-lg pl-4 pr-4 pt-2 pb-2 hover:bg-[#fcda05] hover:text-[#b767ff] duration-300"
             >
               Sign Up
             </button>
@@ -107,7 +107,7 @@ const SignUp = () => {
           <div className="flex flex-col h-[30px] gap-5 pt-4">
             <Link
               href="/signIn"
-              className="text-xs font-bold text-[#c2bdc5] hover:text-[#FFA3FD] duration-300"
+              className="text-xs font-bold text-[#fffbe0] hover:text-[#b767ff] duration-300"
             >
               Existing user? Log in!
             </Link>
