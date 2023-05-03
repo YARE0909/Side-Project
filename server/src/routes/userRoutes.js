@@ -1,48 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
 const prisma = require("../../utils/prisma");
+const loginCheck = require("../middlewares/loginCheck");
 
-router.post("/profile", async (req, res) => {
-    const { authorization } = req.headers;
-    if (!authorization) {
-        return res.status(401).send({ error: "You must be logged in" });
-    }
-    const token = authorization.replace("Bearer ", "");
+router.get("/profile", loginCheck, async (req, res) => {
+    const user = req.user;
     try {
-        const decoded = jwt.verify(token, "MY_SECRET_KEY");
-        const userId = decoded.userId;
-
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-        });
-
         res.send({ email: user.email, userName: user.userName });
     } catch (err) {
         res.status(422).send({ error: err });
     }
 });
 
-router.post("/post", async (req, res) => {
-    const { authorization } = req.headers;
+router.post("/post", loginCheck, async (req, res) => {
+    const user = req.user;
     const { title: _title, content: _content } = req.body;
-    if (!authorization) {
-        return res.status(401).send({ error: "You must be logged in" });
-    }
     if (!_title || !_content || (!_title && !_content)) {
         return res
             .status(401)
             .send({ error: "Provide all the required fields" });
     }
-    const token = authorization.replace("Bearer ", "");
     try {
-        const decoded = jwt.verify(token, "MY_SECRET_KEY");
-        const userId = decoded.userId;
         await prisma.post.create({
             data: {
                 title: _title,
                 content: _content,
-                authorId: String(userId),
+                authorId: String(user.id),
             },
         });
         res.status(200).send("Post created successfully!");
@@ -52,12 +35,8 @@ router.post("/post", async (req, res) => {
     }
 });
 
-router.delete("/post/delete", async (req, res) => {
+router.delete("/post/delete", loginCheck, async (req, res) => {
     const { id: _id } = req.query;
-    const { authorization } = req.headers;
-    if (!authorization) {
-        return res.status(401).send({ error: "You must be logged in" });
-    }
     if (!_id) {
         return res.status(401).send({ error: "Provide a post ID" });
     }
@@ -73,12 +52,8 @@ router.delete("/post/delete", async (req, res) => {
     }
 });
 
-router.delete("/comment/delete", async (req, res) => {
+router.delete("/comment/delete", loginCheck, async (req, res) => {
     const { id: _id } = req.query;
-    const { authorization } = req.headers;
-    if (!authorization) {
-        return res.status(401).send({ error: "You must be logged in" });
-    }
     if (!_id) {
         return res.status(401).send({ error: "Provide a comment ID" });
     }
@@ -94,18 +69,12 @@ router.delete("/comment/delete", async (req, res) => {
     }
 });
 
-router.get("/getUserPosts", async (req, res) => {
-    const { authorization } = req.headers;
-    if (!authorization) {
-        return res.status(401).send({ error: "You must be logged in" });
-    }
-    const token = authorization.replace("Bearer ", "");
+router.get("/getUserPosts", loginCheck, async (req, res) => {
+    const user = req.user;
     try {
-        const decoded = jwt.verify(token, "MY_SECRET_KEY");
-        const userId = decoded.userId;
         const posts = await prisma.post.findMany({
             where: {
-                authorId: String(userId),
+                authorId: String(user.id),
             },
         });
         res.status(200).send(posts);
@@ -114,22 +83,16 @@ router.get("/getUserPosts", async (req, res) => {
     }
 });
 
-router.post("/post/like", async (req, res) => {
-    const { authorization } = req.headers;
+router.post("/post/like", loginCheck, async (req, res) => {
+    const user = req.user;
     const { postId: _postId } = req.body;
-    if (!authorization) {
-        return res.status(401).send({ error: "You must be logged in" });
-    }
     if (!_postId) {
         return res.status(401).send({ error: "Provide a post ID" });
     }
-    const token = authorization.replace("Bearer ", "");
     try {
-        const decoded = jwt.verify(token, "MY_SECRET_KEY");
-        const userId = decoded.userId;
         const check = await prisma.like.findMany({
             where: {
-                userId: userId,
+                userId: user.id,
                 postId: _postId,
             },
         });
@@ -143,7 +106,7 @@ router.post("/post/like", async (req, res) => {
         }
         await prisma.like.create({
             data: {
-                userId: userId,
+                userId: user.id,
                 postId: _postId,
             },
         });
@@ -152,22 +115,16 @@ router.post("/post/like", async (req, res) => {
         res.status(422).send({ error: err });
     }
 });
-router.post("/comment/like", async (req, res) => {
-    const { authorization } = req.headers;
+router.post("/comment/like", loginCheck, async (req, res) => {
+    const user = req.user;
     const { commentId: _commentId } = req.body;
-    if (!authorization) {
-        return res.status(401).send({ error: "You must be logged in" });
-    }
     if (!_commentId) {
         return res.status(401).send({ error: "Provide a comment ID" });
     }
-    const token = authorization.replace("Bearer ", "");
     try {
-        const decoded = jwt.verify(token, "MY_SECRET_KEY");
-        const userId = decoded.userId;
         const check = await prisma.like.findMany({
             where: {
-                userId: userId,
+                userId: user.id,
                 commentId: _commentId,
             },
         });
@@ -181,7 +138,7 @@ router.post("/comment/like", async (req, res) => {
         }
         await prisma.like.create({
             data: {
-                userId: userId,
+                userId: user.id,
                 commentId: _commentId,
             },
         });
@@ -192,30 +149,23 @@ router.post("/comment/like", async (req, res) => {
     }
 });
 
-router.post("/post/comment", async (req, res) => {
-    const { authorization } = req.headers;
+router.post("/post/comment", loginCheck, async (req, res) => {
+    const user = req.user;
     const { postId: _postId, content: _content } = req.body;
-    if (!authorization) {
-        return res.status(401).send({ error: "You must be logged in" });
-    }
     if (!_postId || !_content || (!_postId && !_content)) {
         return res
             .status(401)
             .send({ error: "Provide all the required fields" });
     }
-    const token = authorization.replace("Bearer ", "");
     try {
-        const decoded = jwt.verify(token, "MY_SECRET_KEY");
-        const userId = decoded.userId;
-
         await prisma.comment.create({
             data: {
                 content: _content,
-                authorId: userId,
+                authorId: user.id,
                 postId: _postId,
             },
         });
-        res.send(`Commented on post ${_postId} by user ${userId}`);
+        res.send(`Commented on post ${_postId} by user ${user.id}`);
     } catch (err) {
         res.status(422).send({ error: err });
     }
