@@ -8,7 +8,7 @@ const NavBar = ({ token }: any) => {
     <div className="w-full h-[110px] rounded-lg p-4 fixed">
       <div className="w-full h-full rounded-lg bg-[#fcda05] flex justify-between items-center p-4 pr-8 pl-8">
         <div>
-          <h1 className="text-5xl font-bold text-[#222831]">chirp.</h1>
+          <h1 className="text-5xl font-bold outline">chirp.</h1>
         </div>
         <div className="flex justify-evenly items-center gap-4 text-xl font-bold text-white">
           {token ? (

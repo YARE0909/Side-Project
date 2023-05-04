@@ -1,45 +1,17 @@
 import React, { useEffect, useState } from "react";
 import db from "./api/db";
 import { parseCookies } from "nookies";
+import { authUser } from "@/context/auth-context";
 
 const Profile = () => {
-  const cookies = parseCookies();
-  const token = cookies.token;
-  const [error, setError] = useState(null);
-  const [userData, setUserData]: any = useState({});
+  const { userAuth, token } = authUser();
+
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await db.post(
-          "/profile",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = response.data;
-        setUserData(data);
-      } catch (err: any) {
-        setError(err.response.data.error.message);
-      }
-    })();
+    userAuth();
   }, []);
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
   return (
     <div>
-      {!error ? (
-        <div>
-          <h1>{userData.userName}</h1>
-        </div>
-      ) : (
-        <div>
-          <h1>{error}</h1>
-        </div>
-      )}
+      <h1>Profile</h1>
     </div>
   );
 };

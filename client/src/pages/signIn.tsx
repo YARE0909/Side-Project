@@ -37,7 +37,7 @@ const SignIn = () => {
         maxAge: 30 * 24 * 60 * 60,
         path: "/",
       });
-      router.push("/");
+      router.push("/profile");
     } catch (err: any) {
       if (!err.response) {
         setError("Something went wrong please try again later");
@@ -51,7 +51,7 @@ const SignIn = () => {
     const cookies = parseCookies();
     const token = cookies.token;
     if (token) {
-      router.push("/");
+      router.push("/profile");
     }
   }, []);
   return (
@@ -97,16 +97,21 @@ const SignIn = () => {
             </button>
           </div>
           <div className="flex flex-col h-[30px] gap-5 pt-4">
-            <Link href="/signUp"  className="text-xs font-bold text-[#fffbe0] hover:text-[#b767ff] duration-300">New to chirp.? Sign Up!</Link>
-          <div className="align-bottom">
-            {!error ? null : (
-              <div>
-                <h1 className="text-red-500 text-xs font-bold p-0 m-0">
-                  {error}
-                </h1>
-              </div>
-            )}
-          </div>
+            <Link
+              href="/signUp"
+              className="text-xs font-bold text-[#fffbe0] hover:text-[#b767ff] duration-300"
+            >
+              New to chirp.? Sign Up!
+            </Link>
+            <div className="align-bottom">
+              {!error ? null : (
+                <div>
+                  <h1 className="text-red-500 text-xs font-bold p-0 m-0">
+                    {error}
+                  </h1>
+                </div>
+              )}
+            </div>
           </div>
         </form>
       </div>

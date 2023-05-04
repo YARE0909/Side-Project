@@ -2,19 +2,25 @@ import Hero from "@/components/Hero";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import NavBar from "@/components/NavBar";
-import { parseCookies} from "nookies";
+import { parseCookies } from "nookies";
+import { authUser } from "../context/auth-context";
 
 export default function Home() {
-  const router = useRouter();
-  const [token, setToken]: any = useState(null);
+  const { returnToken } = authUser();
+  const [token, setToken] = useState(null);
+
   useEffect(() => {
-    const cookies = parseCookies();
-    setToken(cookies.token);
+    setToken(returnToken);
   }, []);
+
   return (
-    <div className="w-full min-h-screen h-full bg-[#222831]">
-      <NavBar token={token} />
-      <Hero />
+    <div className="bg-[#222831]">
+      <div>
+        <NavBar token={token} />
+      </div>
+      <div>
+        <Hero />
+      </div>
     </div>
   );
 }
