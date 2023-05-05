@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const prisma = require("../../utils/prisma");
+import jwt from "jsonwebtoken";
+import prisma from "../utils/prisma";
 
-module.exports = async (req, res, next) => {
+export default async (req, res, next) => {
     const { authorization } = req.headers;
     if (!authorization) {
         return res.status(401).send({ error: "You must be logged in" });

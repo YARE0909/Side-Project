@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const prisma = require("../../utils/prisma");
-const { Types } = require("mongoose");
-const bcrypt = require("bcrypt");
+import jwt from "jsonwebtoken";
+import prisma from "../utils/prisma";
+import { Types } from "mongoose";
+import bcrypt from "bcrypt";
 
 router.post("/signup", async (req, res) => {
     // Aliasing email and password to _email and _password respectively.
@@ -35,7 +35,7 @@ router.post("/signup", async (req, res) => {
             });
         });
     } catch (err) {
-        return res.status(422).send(err.message);
+        return res.status(422).send((err as Error).message);
     }
 });
 
@@ -68,4 +68,4 @@ router.post("/signin", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

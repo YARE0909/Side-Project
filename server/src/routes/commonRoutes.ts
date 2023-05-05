@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const prisma = require("../../utils/prisma");
-const loginCheck = require("../middlewares/loginCheck");
+import prisma from "../utils/prisma";
+import loginCheck from "../middlewares/loginCheck";
 
 router.get("/getPosts", async (req, res) => {
     try {
@@ -17,4 +17,4 @@ router.get("/test", loginCheck, async (req, res) => {
     res.send(user.userName);
 });
 
-module.exports = router;
+export default router;

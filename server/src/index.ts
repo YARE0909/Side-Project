@@ -1,11 +1,11 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
-const commonRoutes = require("./routes/commonRoutes");
-const bodyParser = require("body-parser");
-const process = require("node:process");
-const cors = require("cors");
+import express from "express";
+import mongoose from "mongoose";
+import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
+import commonRoutes from "./routes/commonRoutes";
+import bodyParser from "body-parser";
+import process from "node:process";
+import cors from "cors";
 require("dotenv").config();
 
 const app = express();
@@ -22,10 +22,9 @@ app.use(cors(corsOptions));
 app.use(authRoutes);
 app.use(userRoutes);
 app.use(commonRoutes);
-// eslint-disable-next-line no-undef
 const mongoUri = process.env.MONGO_URL;
 
-mongoose.connect(mongoUri);
+mongoose.connect(mongoUri as string);
 
 mongoose.connection.on("connected", () => {
     console.log("Connected to mongo instance");

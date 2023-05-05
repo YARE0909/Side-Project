@@ -1,7 +1,8 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const prisma = require("../../utils/prisma");
-const loginCheck = require("../middlewares/loginCheck");
+import prisma from "../utils/prisma";
+import loginCheck from "../middlewares/loginCheck";
+import { PrismaDeleteError } from "../interfaces/prismaErrors"; 
 
 router.get("/profile", loginCheck, async (req, res) => {
     const user = req.user;
@@ -30,7 +31,6 @@ router.post("/post", loginCheck, async (req, res) => {
         });
         res.status(200).send("Post created successfully!");
     } catch (err) {
-        console.log(err);
         res.status(422).send({ error: err });
     }
 });
@@ -48,7 +48,7 @@ router.delete("/post/delete", loginCheck, async (req, res) => {
         });
         res.status(200).send(`Post ${_id} deleted`);
     } catch (err) {
-        res.status(422).send({ error: err.meta.cause });
+        res.status(422).send({ error: (err as PrismaDeleteError).meta.cause });
     }
 });
 
@@ -65,7 +65,7 @@ router.delete("/comment/delete", loginCheck, async (req, res) => {
         });
         res.status(200).send(`Comment ${_id} deleted`);
     } catch (err) {
-        res.status(422).send({ error: err });
+        res.status(422).send({ error: (err as PrismaDeleteError).meta.cause });
     }
 });
 
@@ -171,4 +171,4 @@ router.post("/post/comment", loginCheck, async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
