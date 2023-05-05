@@ -6,7 +6,7 @@ import commonRoutes from "./routes/commonRoutes";
 import bodyParser from "body-parser";
 import process from "node:process";
 import cors from "cors";
-require("dotenv").config();
+import "dotenv/config";
 
 const app = express();
 app.use(bodyParser.json());
