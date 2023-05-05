@@ -4,6 +4,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const commonRoutes = require("./routes/commonRoutes");
 const bodyParser = require("body-parser");
+const process = require("node:process");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -24,8 +25,6 @@ app.use(commonRoutes);
 // eslint-disable-next-line no-undef
 const mongoUri = process.env.MONGO_URL;
 
-const PORT = 3001;
-
 mongoose.connect(mongoUri);
 
 mongoose.connection.on("connected", () => {
@@ -39,6 +38,6 @@ app.get("/", (req, res) => {
     res.send("Hello There");
 });
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Listening on port ${process.env.PORT}`);
 });
