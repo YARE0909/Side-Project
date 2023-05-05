@@ -10,7 +10,7 @@ export default async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, "MY_SECRET_KEY");
         const userId = decoded.userId;
-        const user = await prisma.user.findUnique({
+        const user = await prisma.getInstance().user.findUnique({
             where: { id: userId },
         });
         req.user = user;

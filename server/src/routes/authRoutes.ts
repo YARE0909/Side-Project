@@ -14,7 +14,7 @@ router.post("/signup", async (req, res) => {
     } = req.body;
     try {
         const generatedId = new Types.ObjectId();
-        const checkUser = await prisma.user.findUnique({
+        const checkUser = await prisma.getInstance().user.findUnique({
             where: { email: _email },
         });
         if (checkUser) {
@@ -22,7 +22,7 @@ router.post("/signup", async (req, res) => {
         }
         bcrypt.genSalt(10, function (err, salt) {
             bcrypt.hash(_password, salt, async function (err, hash) {
-                const user = await prisma.user.create({
+                const user = await prisma.getInstance().user.create({
                     data: {
                         email: _email,
                         password: hash,
@@ -45,7 +45,7 @@ router.post("/signin", async (req, res) => {
     if (!_email || !_password) {
         return res.status(422).send({ error: "Must provide credentials" });
     }
-    const user = await prisma.user.findUnique({
+    const user = await prisma.getInstance().user.findUnique({
         where: { email: _email },
         select: { password: true, id: true },
     });

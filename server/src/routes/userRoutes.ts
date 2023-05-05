@@ -22,7 +22,7 @@ router.post("/post", loginCheck, async (req, res) => {
             .send({ error: "Provide all the required fields" });
     }
     try {
-        await prisma.post.create({
+        await prisma.getInstance().post.create({
             data: {
                 title: _title,
                 content: _content,
@@ -41,7 +41,7 @@ router.delete("/post/delete", loginCheck, async (req, res) => {
         return res.status(401).send({ error: "Provide a post ID" });
     }
     try {
-        await prisma.post.delete({
+        await prisma.getInstance().post.delete({
             where: {
                 id: _id,
             },
@@ -58,7 +58,7 @@ router.delete("/comment/delete", loginCheck, async (req, res) => {
         return res.status(401).send({ error: "Provide a comment ID" });
     }
     try {
-        await prisma.comment.delete({
+        await prisma.getInstance().comment.delete({
             where: {
                 id: _id,
             },
@@ -72,7 +72,7 @@ router.delete("/comment/delete", loginCheck, async (req, res) => {
 router.get("/getUserPosts", loginCheck, async (req, res) => {
     const user = req.user;
     try {
-        const posts = await prisma.post.findMany({
+        const posts = await prisma.getInstance().post.findMany({
             where: {
                 authorId: String(user.id),
             },
@@ -90,21 +90,21 @@ router.post("/post/like", loginCheck, async (req, res) => {
         return res.status(401).send({ error: "Provide a post ID" });
     }
     try {
-        const check = await prisma.like.findMany({
+        const check = await prisma.getInstance().like.findMany({
             where: {
                 userId: user.id,
                 postId: _postId,
             },
         });
         if (check.length !== 0) {
-            await prisma.like.delete({
+            await prisma.getInstance().like.delete({
                 where: {
                     id: check[0].id,
                 },
             });
             return res.send("Post unliked");
         }
-        await prisma.like.create({
+        await prisma.getInstance().like.create({
             data: {
                 userId: user.id,
                 postId: _postId,
@@ -122,21 +122,21 @@ router.post("/comment/like", loginCheck, async (req, res) => {
         return res.status(401).send({ error: "Provide a comment ID" });
     }
     try {
-        const check = await prisma.like.findMany({
+        const check = await prisma.getInstance().like.findMany({
             where: {
                 userId: user.id,
                 commentId: _commentId,
             },
         });
         if (check.length !== 0) {
-            await prisma.like.delete({
+            await prisma.getInstance().like.delete({
                 where: {
                     id: check[0].id,
                 },
             });
             return res.send("Comment unliked");
         }
-        await prisma.like.create({
+        await prisma.getInstance().like.create({
             data: {
                 userId: user.id,
                 commentId: _commentId,
@@ -158,7 +158,7 @@ router.post("/post/comment", loginCheck, async (req, res) => {
             .send({ error: "Provide all the required fields" });
     }
     try {
-        await prisma.comment.create({
+        await prisma.getInstance().comment.create({
             data: {
                 content: _content,
                 authorId: user.id,

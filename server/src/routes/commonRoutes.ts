@@ -5,7 +5,7 @@ import loginCheck from "../middlewares/loginCheck";
 
 router.get("/getPosts", async (req, res) => {
     try {
-        const posts = await prisma.post.findMany({});
+        const posts = await prisma.getInstance().post.findMany({});
         res.status(200).send(posts);
     } catch (err) {
         res.status(422).send({ error: err });
