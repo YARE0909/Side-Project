@@ -5,13 +5,7 @@ import NavBar from "@/components/NavBar";
 import { authUser } from "../context/auth-context";
 
 export default function Home() {
-  const { returnToken } = authUser();
-  const [token, setToken] = useState(null);
-
-  useEffect(() => {
-    setToken(returnToken);
-  }, []);
-
+  const { token }: any = authUser();
   return (
     <div className="bg-[#222831]">
       <div>

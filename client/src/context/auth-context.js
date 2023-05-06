@@ -1,25 +1,28 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const router = useRouter();
   const cookies = parseCookies();
+  const [token, setToken] = useState(null);
 
-  const returnToken = () => {
-    return cookies.token;
-  };
+  useEffect(() => {
+    setToken(cookies.token);
+  }, []);
 
   const userAuth = () => {
     if (!cookies.token) {
       router.push("/signIn");
+    } else {
+      return true;
     }
   };
 
   const data = {
-    returnToken,
+    token,
     userAuth,
   };
 
