@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 const corsOptions = {
     origin: "http://localhost:3000",
-    credentials: false,
+    credentials: true,
     optionSuccessStatus: 200,
 };
 
