@@ -37,7 +37,7 @@ const SignIn = () => {
         maxAge: 30 * 24 * 60 * 60,
         path: "/",
       });
-      router.push("/profile");
+      router.push("/");
     } catch (err: any) {
       if (!err.response) {
         setError("Something went wrong please try again later");
