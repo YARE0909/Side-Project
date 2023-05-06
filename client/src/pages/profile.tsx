@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import db from "./api/db";
 import { authUser } from "@/context/auth-context";
+import Image from "next/image";
+import NavBar from "@/components/NavBar";
 
 const Profile = () => {
   const { userAuth, token }: any = authUser();
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    email: "",
+    userName: "",
+  });
 
   useEffect(() => {
     const auth = userAuth();
@@ -16,10 +21,11 @@ const Profile = () => {
               authorization: `Bearer ${token}`,
             },
           });
-
-          setData(response.data);
-
-          console.log(`Data: ${data.email}`);
+          setData((d) => ({
+            ...d,
+            email: response.data.email,
+            userName: response.data.userName,
+          }));
         })();
       } catch (err) {
         console.log(err as Error);
@@ -27,8 +33,33 @@ const Profile = () => {
     }
   }, [token]);
   return (
-    <div>
-      <h1>Profile</h1>
+    <div className="w-full min-h-screen h-full bg-bg">
+      <div>
+        <NavBar token />
+      </div>
+      <div className="w-full h-full gap-5 flex flex-col justify-start items-center pt-48">
+        <div>
+          <Image
+            width={300}
+            height={300}
+            src="https://cdn.dribbble.com/users/6142/screenshots/5679189/media/1b96ad1f07feee81fa83c877a1e350ce.png?compress=1&resize=400x300&vertical=top"
+            alt={data.userName}
+            className="rounded-full"
+          />
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          <div>
+            <h1 className="text-4xl font-bold text-[#ffffff]">
+              {data.userName}
+            </h1>
+          </div>
+          <div>
+            <h1 className="text-xl font-semibold text-[#acaaaa]">
+              {data.email}
+            </h1>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
