@@ -27,10 +27,12 @@ router.post("/post", loginCheck, async (req, res) => {
                 title: _title,
                 content: _content,
                 authorId: String(user.id),
+                
             },
         });
         res.status(200).send("Post created successfully!");
     } catch (err) {
+        console.log(err)
         res.status(422).send({ error: err });
     }
 });

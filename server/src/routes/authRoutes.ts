@@ -15,10 +15,17 @@ router.post("/signup", async (req, res) => {
     try {
         const generatedId = new Types.ObjectId();
         const checkUser = await prisma.getInstance().user.findUnique({
-            where: { email: _email },
+            where: { email: _email, },
         });
-        if (checkUser) {
-            return res.status(302).send("Email already exists");
+        const checkUserName = await prisma.getInstance().user.findFirst({
+            where: { userName: _userName },
+        });
+        if (checkUser || checkUserName) {
+            if (checkUser) {
+                return res.status(302).send("Email already exists");
+            } else {
+                return res.status(302).send("Username is already taken");
+            }
         }
         bcrypt.genSalt(10, function (err, salt) {
             bcrypt.hash(_password, salt, async function (err, hash) {

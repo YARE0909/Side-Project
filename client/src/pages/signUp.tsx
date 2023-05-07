@@ -38,7 +38,7 @@ const SignUp = () => {
       if (!err.response) {
         setError("Something went wrong please try again later");
       } else {
-        setError(err.response.data.error);
+        setError(err.response.data);
       }
     }
   };

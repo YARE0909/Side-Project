@@ -10,7 +10,7 @@ export default function Home({ data }: any) {
   const { token }: any = authUser();
 
   return (
-    <div className="bg-[#222831]">
+    <div className="bg-bg">
       <div>
         <NavBar token={token} />
       </div>
@@ -22,6 +22,6 @@ export default function Home({ data }: any) {
 export async function getStaticProps() {
   const response = await db.get("/getPosts");
   return {
-    props: { data: response.data }, // will be passed to the page component as props
+    props: { data: response.data },
   };
 }
