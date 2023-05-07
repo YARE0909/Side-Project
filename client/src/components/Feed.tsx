@@ -13,7 +13,7 @@ const Feed = ({ data }: any) => {
     <div className="w-full min-h-screen h-full bg-bg flex flex-col justify-start items-center text-[#ffffff]">
       <div>
         <div className="p-4 pt-12 fixed bg-bg w-full">
-          <h1 className="text-4xl font-bold pb-6">Posts</h1>
+          <h1 className="text-4xl font-bold pb-6">Chirps</h1>
         </div>
         <div className="mt-28 overflow-hidden">
           {data ? (
