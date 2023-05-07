@@ -12,10 +12,10 @@ const Feed = ({ data }: any) => {
   return (
     <div className="w-full min-h-screen h-full bg-bg flex flex-col justify-start items-center text-[#ffffff]">
       <div>
-        <div className="p-4 fixed bg-bg w-full">
+        <div className="p-4 pt-12 fixed bg-bg w-full">
           <h1 className="text-4xl font-bold pb-6">Posts</h1>
         </div>
-        <div className="mt-20 overflow-hidden">
+        <div className="mt-28 overflow-hidden">
           {data ? (
             data
               .map((item: any, key: any) => {
