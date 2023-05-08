@@ -1,14 +1,20 @@
 import { authUser } from "@/context/auth-context";
 import React, { useEffect, useState } from "react";
 import { BiHeart, BiComment } from "react-icons/bi";
+import { formatDistanceStrict } from 'date-fns';
+
 
 const Feed = ({ data }: any) => {
   const { userAuth }: any = authUser();
   const [postData, setPostData] = useState([]);
   useEffect(() => {
     setPostData(data);
-    console.log(data);
   }, []);
+  function getRelativeTime(date: Date) {
+    const past = new Date(date);
+    const formattedTime = formatDistanceStrict(past, new Date(), { addSuffix: true, roundingMethod: 'floor' });
+    return formattedTime// prints something like "4 days ago"
+  }
   return (
     <div className="w-full min-h-screen h-full bg-bg flex flex-col justify-start items-center text-[#ffffff]">
       <div>
@@ -42,12 +48,7 @@ const Feed = ({ data }: any) => {
                       <div className="mt-6 flex justify-between gap-5">
                         <div>
                           <h1 className="text-sm font-semibold text-gray-500">
-                            {item.createdAt
-                              .substring(0, 10)
-                              .replaceAll("-", "/")
-                              .split("/")
-                              .reverse()
-                              .join("/")}
+                            {getRelativeTime(item.createdAt)}
                           </h1>
                         </div>
                         <div className="flex gap-5">

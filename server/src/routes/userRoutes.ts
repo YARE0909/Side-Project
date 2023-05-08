@@ -9,7 +9,6 @@ router.get("/profile", loginCheck, async (req, res) => {
     try {
         res.send({ email: user.email, userName: user.userName, displayName: user.displayName });
     } catch (err) {
-        console.log(err);
         res.status(422).send({ error: err });
     }
 });
@@ -32,7 +31,7 @@ router.post("/post", loginCheck, async (req, res) => {
         });
         res.status(200).send("Post created successfully!");
     } catch (err) {
-        console.log(err)
+        
         res.status(422).send({ error: err });
     }
 });
@@ -146,7 +145,7 @@ router.post("/comment/like", loginCheck, async (req, res) => {
         });
         res.send(`Comment ${_commentId} liked`);
     } catch (err) {
-        console.log(err);
+        ;
         res.status(422).send({ error: err });
     }
 });
