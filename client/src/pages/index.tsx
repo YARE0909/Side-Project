@@ -6,14 +6,48 @@ import db from "./api/db";
 
 export default function Home({ data }: any) {
   const { token }: any = authUser();
-  console.log(data);
+
+  const likePost = async (id: any) => {
+    await db.post(
+      "/post/like",
+      {
+        postId: id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  };
+
+  const getLikePostLikeCount = async (id: any) => {
+    try {
+      const response = await db.get("/post/likeCount", {
+        params: {
+          postId: id,
+        },
+      });
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+  };
 
   return (
     <div className="bg-bg">
       <div>
         <NavBar token={token} />
       </div>
-      {token ? <Feed data={data} /> : <Hero />}
+      {token ? (
+        <Feed
+          data={data}
+          likePost={likePost}
+          getLikePostLikeCount={getLikePostLikeCount}
+        />
+      ) : (
+        <Hero />
+      )}
     </div>
   );
 }

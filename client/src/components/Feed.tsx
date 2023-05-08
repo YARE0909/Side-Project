@@ -1,19 +1,16 @@
 import { authUser } from "@/context/auth-context";
 import React, { useEffect, useState } from "react";
 import { BiHeart, BiComment } from "react-icons/bi";
-import { formatDistanceStrict } from 'date-fns';
+import { formatDistanceStrict } from "date-fns";
 
-
-const Feed = ({ data }: any) => {
-  const { userAuth }: any = authUser();
-  const [postData, setPostData] = useState([]);
-  useEffect(() => {
-    setPostData(data);
-  }, []);
+const Feed = ({ data, likePost, getLikePostLikeCount }: any) => {
   function getRelativeTime(date: Date) {
     const past = new Date(date);
-    const formattedTime = formatDistanceStrict(past, new Date(), { addSuffix: true, roundingMethod: 'floor' });
-    return formattedTime// prints something like "4 days ago"
+    const formattedTime = formatDistanceStrict(past, new Date(), {
+      addSuffix: true,
+      roundingMethod: "floor",
+    });
+    return formattedTime; // prints something like "4 days ago"
   }
   return (
     <div className="w-full min-h-screen h-full bg-bg flex flex-col justify-start items-center text-[#ffffff]">
@@ -25,6 +22,13 @@ const Feed = ({ data }: any) => {
           {data ? (
             data
               .map((item: any, key: any) => {
+                const [likeCount, setLikeCount] = useState(null);
+                useEffect(() => {
+                  (async () => {
+                    const likeCount = await getLikePostLikeCount(item.id);
+                    setLikeCount(likeCount.length);
+                  })();
+                }, [likeCount]);
                 return (
                   <div key={key}>
                     <div className="w-[90vw] max-w-[600px] h-fit flex flex-col rounded-lg border-2 border-gray-500 m-4 p-4">
@@ -51,11 +55,21 @@ const Feed = ({ data }: any) => {
                             {getRelativeTime(item.createdAt)}
                           </h1>
                         </div>
-                        <div className="flex gap-5">
-                          <div className="text-gray-300 hover:text-red-600 duration-300 cursor-pointer">
+                        <div className="flex gap-8 pr-2">
+                          <div
+                            className="text-gray-300 hover:text-red-600 duration-300 cursor-pointer flex justify-center items-center"
+                            onClick={async () => {
+                              await likePost(item.id);
+                              const likeCount = await getLikePostLikeCount(
+                                item.id
+                              );
+                              setLikeCount(likeCount.length);
+                            }}
+                          >
                             <BiHeart className="font-bold text-xl" />
+                            <h1>{likeCount}</h1>
                           </div>
-                          <div className="text-gray-300 hover:text-blue-600 duration-300 cursor-pointer">
+                          <div className="text-gray-300 hover:text-blue-600 duration-300 cursor-pointer flex justify-center items-center">
                             <BiComment className="font-bold text-xl" />
                           </div>
                         </div>

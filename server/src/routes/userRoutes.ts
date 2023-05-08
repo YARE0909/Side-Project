@@ -31,7 +31,7 @@ router.post("/post", loginCheck, async (req, res) => {
         });
         res.status(200).send("Post created successfully!");
     } catch (err) {
-        
+        console.log(err);
         res.status(422).send({ error: err });
     }
 });
