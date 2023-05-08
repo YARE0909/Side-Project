@@ -9,6 +9,7 @@ const Profile = () => {
   const [data, setData] = useState({
     email: "",
     userName: "",
+    displayName: "",
   });
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const Profile = () => {
             ...d,
             email: response.data.email,
             userName: response.data.userName,
+            displayName: response.data.displayName,
           }));
         })();
       } catch (err) {
@@ -48,14 +50,12 @@ const Profile = () => {
           />
         </div>
         <div className="flex flex-col justify-center items-center">
-          <div>
+          <div className="flex flex-col gap-1 justify-center items-center">
             <h1 className="text-4xl font-bold text-[#ffffff]">
-              {data.userName}
+              {data.displayName}
             </h1>
-          </div>
-          <div>
-            <h1 className="text-xl font-semibold text-[#acaaaa]">
-              {data.email}
+            <h1 className="text-xl font-bold text-gray-400">
+              @{data.userName}
             </h1>
           </div>
         </div>

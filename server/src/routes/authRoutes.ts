@@ -11,6 +11,7 @@ router.post("/signup", async (req, res) => {
         email: _email,
         password: _password,
         userName: _userName,
+        displayName: _displayName,
     } = req.body;
     try {
         const generatedId = new Types.ObjectId();
@@ -35,6 +36,7 @@ router.post("/signup", async (req, res) => {
                         password: hash,
                         id: String(generatedId),
                         userName: _userName,
+                        displayName: _displayName
                     },
                 });
                 const token = jwt.sign({ userId: user.id }, "MY_SECRET_KEY");

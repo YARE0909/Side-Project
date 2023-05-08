@@ -7,8 +7,9 @@ import { PrismaDeleteError } from "../interfaces/prismaErrors";
 router.get("/profile", loginCheck, async (req, res) => {
     const user = req.user;
     try {
-        res.send({ email: user.email, userName: user.userName });
+        res.send({ email: user.email, userName: user.userName, displayName: user.displayName });
     } catch (err) {
+        console.log(err);
         res.status(422).send({ error: err });
     }
 });
@@ -27,7 +28,6 @@ router.post("/post", loginCheck, async (req, res) => {
                 title: _title,
                 content: _content,
                 authorId: String(user.id),
-                
             },
         });
         res.status(200).send("Post created successfully!");

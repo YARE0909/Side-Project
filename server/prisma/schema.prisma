@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  email     String    @unique
-  password  String
-  userName  String    @unique
-  createdAt DateTime  @default(now())
-  posts     Post[]
-  comments  Comment[]
-  likes     Like[]
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  email       String    @unique
+  password    String
+  userName    String    @unique
+  displayName String    @default("")
+  createdAt   DateTime  @default(now())
+  posts       Post[]
+  comments    Comment[]
+  likes       Like[]
 }
 
 model Post {

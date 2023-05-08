@@ -10,12 +10,14 @@ router.get("/getPosts", async (req, res) => {
                 author: {
                     select: {
                         userName: true,
+                        displayName: true,
                     },
                 },
             },
         });
         res.status(200).send(posts);
     } catch (err) {
+        console.log(err);
         res.status(422).send({ error: err });
     }
 });

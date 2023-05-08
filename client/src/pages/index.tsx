@@ -1,6 +1,4 @@
 import Hero from "@/components/Hero";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import NavBar from "@/components/NavBar";
 import { authUser } from "../context/auth-context";
 import Feed from "@/components/Feed";
@@ -8,6 +6,7 @@ import db from "./api/db";
 
 export default function Home({ data }: any) {
   const { token }: any = authUser();
+  console.log(data);
 
   return (
     <div className="bg-bg">

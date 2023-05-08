@@ -22,11 +22,12 @@ const Feed = ({ data }: any) => {
                 return (
                   <div key={key}>
                     <div className="w-[90vw] max-w-[600px] h-fit flex flex-col rounded-lg border-2 border-gray-500 m-4 p-4">
-                      <div>
+                      <div className="flex items-center gap-1">
+                        <h1 className="text-base text-gray-300 font-bold ">
+                          {item.author.userName}
+                        </h1>
                         <h1 className="text-sm font-semibold text-gray-500">
-                          <span className="text-base text-gray-300 font-bold ">
-                            {item.author.userName}
-                          </span>{" "}
+                          @{item.author.displayName}
                         </h1>
                       </div>
 
@@ -43,7 +44,10 @@ const Feed = ({ data }: any) => {
                           <h1 className="text-sm font-semibold text-gray-500">
                             {item.createdAt
                               .substring(0, 10)
-                              .replaceAll("-", "/")}
+                              .replaceAll("-", "/")
+                              .split("/")
+                              .reverse()
+                              .join("/")}
                           </h1>
                         </div>
                         <div className="flex gap-5">

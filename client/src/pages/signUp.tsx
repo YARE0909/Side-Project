@@ -10,6 +10,7 @@ const SignUp = () => {
     email: "",
     password: "",
     userName: "",
+    displayName: "",
   });
 
   const [error, setError]: any = useState(null);
@@ -18,14 +19,18 @@ const SignUp = () => {
     try {
       event.preventDefault();
       const formData = {
-        email: (event.currentTarget.elements[1] as HTMLInputElement).value,
-        password: (event.currentTarget.elements[2] as HTMLInputElement).value,
+        email: (event.currentTarget.elements[2] as HTMLInputElement).value,
+        password: (event.currentTarget.elements[3] as HTMLInputElement).value,
         userName: (event.currentTarget.elements[0] as HTMLInputElement).value,
+        displayName: (event.currentTarget.elements[1] as HTMLInputElement)
+          .value,
       };
+      console.log(formData);
       const response = await db.post("/signup", {
         email: formData.email,
         password: formData.password,
         userName: formData.userName,
+        displayName: formData.displayName,
       });
       setError(false);
       const token = await response.data.token;
@@ -73,6 +78,18 @@ const SignUp = () => {
               />
               <label className="block mb-2 text-sm font-bold text-white">
                 Username
+              </label>
+            </div>
+            <div className="input-container w-full">
+              <input
+                onChange={handleChange}
+                type="text"
+                name="displayName"
+                required
+                pattern="^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
+              />
+              <label className="block mb-2 text-sm font-bold text-white">
+                Display Name
               </label>
             </div>
             <div className="input-container w-full">
