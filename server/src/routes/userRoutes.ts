@@ -7,7 +7,7 @@ import { PrismaDeleteError } from "../interfaces/prismaErrors";
 router.get("/profile", loginCheck, async (req, res) => {
     const user = req.user;
     try {
-        res.send({ email: user.email, userName: user.userName, displayName: user.displayName });
+        res.send({ email: user.email, userName: user.userName, displayName: user.displayName, id: user.id });
     } catch (err) {
         res.status(422).send({ error: err });
     }

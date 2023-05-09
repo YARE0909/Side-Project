@@ -34,6 +34,15 @@ export default function Home({ data }: any) {
     }
   };
 
+  const getUser = async () => {
+    const response = await db.get("/profile", {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  };
+
   return (
     <div className="bg-bg">
       <div>
@@ -44,6 +53,7 @@ export default function Home({ data }: any) {
           data={data}
           likePost={likePost}
           getLikePostLikeCount={getLikePostLikeCount}
+          getUser={getUser}
         />
       ) : (
         <Hero />

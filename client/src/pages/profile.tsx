@@ -10,6 +10,7 @@ const Profile = () => {
     email: "",
     userName: "",
     displayName: "",
+    id: "",
   });
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const Profile = () => {
             email: response.data.email,
             userName: response.data.userName,
             displayName: response.data.displayName,
+            id: response.data.id,
           }));
         })();
       } catch (err) {

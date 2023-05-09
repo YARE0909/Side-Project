@@ -20,7 +20,7 @@ const NavBar = ({ token }: any) => {
   };
   return (
     <div>
-      <div className="w-[25vw] h-screen rounded-lg p-4 fixed lg:flex hidden">
+      <div className="w-[25vw] h-screen rounded-lg p-4 fixed lg:flex hidden z-20">
         {open ? (
           <div className="w-full h-full bg-white rounded-l-lg flex flex-col gap-10 items-start justify-between p-4 text-black">
             <div>
@@ -80,7 +80,7 @@ const NavBar = ({ token }: any) => {
           </div>
         </div>
       </div>
-      <div className="w-full h-fit rounded-lg lg:hidden p-4 fixed bottom-0">
+      <div className="w-full h-fit rounded-lg lg:hidden p-4 fixed bottom-0 z-20">
         <div className={openMobile ? "w-full h-[80px] rounded-t-lg bg-[#ef564e] flex justify-between items-center p-4 pr-8 pl-8 text-white":"w-full h-[80px] rounded-lg bg-[#ef564e] flex justify-between items-center p-4 pr-8 pl-8 text-white"}>
           <div onClick={toggleOpenMobile}>
             {openMobile ? (

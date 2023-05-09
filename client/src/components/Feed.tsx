@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { BiHeart, BiComment } from "react-icons/bi";
 import { formatDistanceStrict } from "date-fns";
 
-const Feed = ({ data, likePost, getLikePostLikeCount }: any) => {
+const Feed = ({ data, likePost, getLikePostLikeCount, getUser }: any) => {
   function getRelativeTime(date: Date) {
     const past = new Date(date);
     const formattedTime = formatDistanceStrict(past, new Date(), {
@@ -23,9 +23,15 @@ const Feed = ({ data, likePost, getLikePostLikeCount }: any) => {
             data
               .map((item: any, key: any) => {
                 const [likeCount, setLikeCount] = useState(null);
+                const [likeState, setLikeState] = useState(false);
+
                 useEffect(() => {
                   (async () => {
                     const likeCount = await getLikePostLikeCount(item.id);
+                    const user = await getUser();
+                    for (let i = 0; i < likeCount.length; i++) {
+                      if (likeCount[i].userId === user.id) setLikeState(true);
+                    }
                     setLikeCount(likeCount.length);
                   })();
                 }, [likeCount]);
@@ -57,13 +63,18 @@ const Feed = ({ data, likePost, getLikePostLikeCount }: any) => {
                         </div>
                         <div className="flex gap-8 pr-2">
                           <div
-                            className="text-gray-300 hover:text-red-600 duration-300 cursor-pointer flex justify-center items-center"
+                            className={
+                              likeState
+                                ? "text-red-600 hover:text-gray-300 duration-300 cursor-pointer flex justify-center items-center"
+                                : "text-gray-300 hover:text-red-600 duration-300 cursor-pointer flex justify-center items-center"
+                            }
                             onClick={async () => {
                               await likePost(item.id);
                               const likeCount = await getLikePostLikeCount(
                                 item.id
                               );
                               setLikeCount(likeCount.length);
+                              setLikeState(!likeState);
                             }}
                           >
                             <BiHeart className="font-bold text-xl" />
