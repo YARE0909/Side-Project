@@ -12,6 +12,10 @@ const Feed = ({ data, likePost, getLikePostLikeCount }: any) => {
     });
     return formattedTime; // prints something like "4 days ago"
   }
+  function format(_number: any): string {
+    const formattedNumber = new Intl.NumberFormat('en-US', { notation: 'compact', compactDisplay: 'short' }).format(_number);
+    return formattedNumber
+  } 
   return (
     <div className="w-full min-h-screen h-full bg-bg flex flex-col justify-start items-center text-[#ffffff]">
       <div>
@@ -26,6 +30,7 @@ const Feed = ({ data, likePost, getLikePostLikeCount }: any) => {
                 useEffect(() => {
                   (async () => {
                     const likeCount = await getLikePostLikeCount(item.id);
+                    console.log(likeCount)
                     setLikeCount(likeCount.length);
                   })();
                 }, [likeCount]);
@@ -67,7 +72,7 @@ const Feed = ({ data, likePost, getLikePostLikeCount }: any) => {
                             }}
                           >
                             <BiHeart className="font-bold text-xl" />
-                            <h1>{likeCount}</h1>
+                            <h1>{format(likeCount)}</h1>
                           </div>
                           <div className="text-gray-300 hover:text-blue-600 duration-300 cursor-pointer flex justify-center items-center">
                             <BiComment className="font-bold text-xl" />
