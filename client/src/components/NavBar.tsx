@@ -54,7 +54,7 @@ const NavBar = ({ token }: any) => {
             </div>
           </div>
         ) : null}
-        <div className={open ? "w-[90px] h-full rounded-r-lg bg-[#ef564e] flex flex-col justify-between items-center p-4 pr-8 pl-8 text-white":"w-[90px] h-full rounded-lg bg-[#ef564e] flex flex-col justify-between items-center p-4 pr-8 pl-8 text-white"}>
+        <div className={open ? "w-[90px] h-full rounded-r-lg bg-pink-600 flex flex-col justify-between items-center p-4 pr-8 pl-8 text-white":"w-[90px] h-full rounded-lg bg-pink-600 flex flex-col justify-between items-center p-4 pr-8 pl-8 text-white"}>
           <div onClick={toggleOpen}>
             {open ? (
               <AiOutlineMenuFold className="text-3xl font-bold cursor-pointer" />
@@ -80,8 +80,8 @@ const NavBar = ({ token }: any) => {
           </div>
         </div>
       </div>
-      <div className="w-full h-fit rounded-lg lg:hidden p-4 fixed bottom-0 z-20">
-        <div className={openMobile ? "w-full h-[80px] rounded-t-lg bg-[#ef564e] flex justify-between items-center p-4 pr-8 pl-8 text-white":"w-full h-[80px] rounded-lg bg-[#ef564e] flex justify-between items-center p-4 pr-8 pl-8 text-white"}>
+      <div className="w-full h-fit rounded-lg lg:hidden p-4 fixed bottom-0 left-0 z-20">
+        <div className={openMobile ? "w-full h-[80px] rounded-t-lg bg-pink-600 flex justify-between items-center p-4 pr-8 pl-8 text-white":"w-full h-[80px] rounded-lg bg-pink-600 flex justify-between items-center p-4 pr-8 pl-8 text-white"}>
           <div onClick={toggleOpenMobile}>
             {openMobile ? (
               <AiOutlineMenuFold className="text-3xl font-bold cursor-pointer" />
@@ -107,7 +107,7 @@ const NavBar = ({ token }: any) => {
           </div>
         </div>
         {openMobile ? (
-          <div className="w-full h-[35vh] bg-white rounded-b-lg flex flex-col justify-between p-4">
+          <div className="w-full h-[35vh] bg-white rounded-b-lg flex flex-col justify-between p-4 text-black">
             <div>
               <Link href="/" className="text-6xl font-extrabold">chirp.</Link>
             </div>
