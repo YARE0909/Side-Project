@@ -1,6 +1,7 @@
 import { authUser } from "@/context/auth-context";
 import React, { useEffect, useState } from "react";
 import { BiHeart, BiComment } from "react-icons/bi";
+import { MdPostAdd } from "react-icons/md";
 import { formatDistanceStrict } from "date-fns";
 
 const Feed = ({ data, likePost, getLikePostLikeCount, getUser }: any) => {
@@ -13,14 +14,19 @@ const Feed = ({ data, likePost, getLikePostLikeCount, getUser }: any) => {
     return formattedTime; // prints something like "4 days ago"
   }
   function format(_number: any): string {
-    const formattedNumber = new Intl.NumberFormat('en-US', { notation: 'compact', compactDisplay: 'short' }).format(_number);
-    return formattedNumber
-  } 
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      notation: "compact",
+      compactDisplay: "short",
+    }).format(_number);
+    return formattedNumber;
+  }
   return (
     <div className="w-full min-h-screen h-full bg-bg flex flex-col justify-start items-center text-[#ffffff]">
       <div>
-        <div className="p-4 pt-12 fixed bg-bg w-full">
-          <h1 className="text-4xl font-bold pb-6">Chirps</h1>
+        <div className="p-4 pt-12 fixed bg-bg w-full flex justify-between items-center">
+          <div>
+            <h1 className="text-4xl font-bold pb-6">Chirps</h1>
+          </div>
         </div>
         <div className="mt-28 overflow-hidden">
           {data ? (
@@ -54,7 +60,7 @@ const Feed = ({ data, likePost, getLikePostLikeCount, getUser }: any) => {
                       <div className="break-words">
                         <h1 className="text-2xl font-bold">{item.title}</h1>
                       </div>
-                      <div className="break-words">
+                      <div className="break-words mt-3">
                         <h1 className="text-sm font-semibold text-white">
                           {item.content}
                         </h1>

@@ -20,19 +20,19 @@ const NavBar = ({ token }: any) => {
   };
   return (
     <div>
-      <div className="w-[25vw] h-screen rounded-lg p-4 fixed lg:flex hidden z-20">
+      <div className="w-[25vw] h-screen rounded-lg p-4 fixed left-0 top-0 lg:flex hidden z-20">
         {open ? (
           <div className="w-full h-full bg-white rounded-l-lg flex flex-col gap-10 items-start justify-between p-4 text-black">
             <div>
-              <h1 className="text-6xl font-extrabold">chirp.</h1>
+              <Link href="/" className="text-6xl font-extrabold">chirp.</Link>
             </div>
             <div className="font-bold text-2xl flex flex-col gap-5 duration-300">
               <div>
                 <Link
                   className="hover:drop-shadow-[0px_0px_1.5px_rgba(0,0,0,1)] hover:text-white duration-300"
-                  href="/"
+                  href="/createPost"
                 >
-                  Home
+                  Create Post
                 </Link>
               </div>
               <div>
@@ -109,15 +109,15 @@ const NavBar = ({ token }: any) => {
         {openMobile ? (
           <div className="w-full h-[35vh] bg-white rounded-b-lg flex flex-col justify-between p-4">
             <div>
-              <h1 className="text-6xl font-extrabold">chirp.</h1>
+              <Link href="/" className="text-6xl font-extrabold">chirp.</Link>
             </div>
             <div className="font-bold text-2xl flex flex-col gap-5 duration-300">
               <div>
                 <Link
                   className="hover:drop-shadow-[0px_0px_1.5px_rgba(0,0,0,1)] hover:text-white duration-300"
-                  href="/"
+                  href="/createPost"
                 >
-                  Home
+                  Create Post
                 </Link>
               </div>
               <div>
